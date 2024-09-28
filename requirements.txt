@@ -1,8 +1,8 @@
-streamlit
-tensorflow
-numpy
-Pillow
-exifread
-opencv-python
-matplotlib
-scikit-image
+streamlit==1.10.0
+tensorflow==2.9.0
+numpy==1.21.0
+Pillow==9.0.0
+exifread==2.3.2
+opencv-python==4.5.3.20210928  # Replace with the desired version
+matplotlib==3.5.1
+scikit-image==0.19.2
