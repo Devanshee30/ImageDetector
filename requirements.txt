@@ -3,6 +3,6 @@ tensorflow==2.16.1       # Choose a compatible version
 numpy                     # The latest version will be installed
 Pillow                    # The latest version will be installed
 exifread                  # The latest version will be installed
-opencv-python             # The latest version will be installed
+opencv-python==4.7.0.72             # The latest version will be installed
 matplotlib                # The latest version will be installed
 scikit-image              # The latest version will be installed
