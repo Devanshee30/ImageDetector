@@ -26,14 +26,25 @@ def preprocess_image(img):
     img_array = img_array / 255.0
     return img_array
 
-# Metadata extraction function
-def extract_metadata(image_file):
-    file_stats = os.fstat(image_file.fileno())
+# # Metadata extraction function
+# def extract_metadata(image_file):
+#     file_stats = os.fstat(image_file.fileno())
+#     metadata = {
+#         'File Size': file_stats.st_size,
+#         'Creation Time': datetime.fromtimestamp(file_stats.st_ctime),
+#         'Last Modified Time': datetime.fromtimestamp(file_stats.st_mtime),
+#         'File Format': os.path.splitext(image_file.name)[1]
+#     }
+#     return metadata
+
+# Define the extract_file_metadata function to get file metadata
+def extract_metadata(image_path):
+    file_stats = os.stat(image_path)
     metadata = {
         'File Size': file_stats.st_size,
         'Creation Time': datetime.fromtimestamp(file_stats.st_ctime),
         'Last Modified Time': datetime.fromtimestamp(file_stats.st_mtime),
-        'File Format': os.path.splitext(image_file.name)[1]
+        'File Format': os.path.splitext(image_path)[1]
     }
     return metadata
 
@@ -85,12 +96,14 @@ if uploaded_file is not None:
     st.write(f"**Prediction:** {prediction_label} ({confidence * 100:.2f}% confidence)")
 
     # Extract and display metadata
-    with tempfile.NamedTemporaryFile(delete=False) as temp:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded_file.name)[1]) as temp:
         temp.write(uploaded_file.read())
+        temp.flush()  # Ensure all data is written to disk
+        os.fsync(temp.fileno())  # Synchronize file's state with the disk
         temp_path = temp.name
     
-    with open(temp_path, 'rb') as image_file:
-        metadata = extract_metadata(image_file)
+    # Extract metadata using the file path
+    metadata = extract_metadata(temp_path)
     
     st.subheader("📄 Metadata Information")
     st.json(metadata)
