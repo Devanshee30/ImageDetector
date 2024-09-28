@@ -1,4 +1,8 @@
-streamlit==1.38.0
-tensorflow==2.17.0
+streamlit
+tensorflow
 numpy
 Pillow
+exifread
+opencv-python
+matplotlib
+scikit-image
